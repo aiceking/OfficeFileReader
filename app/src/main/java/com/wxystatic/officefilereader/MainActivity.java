@@ -15,6 +15,7 @@ import com.wxystatic.officefilereader.permissionhelp.GetPermissionListener;
 import com.wxystatic.officefilereader.permissionhelp.PermissionHelp;
 import com.wxystatic.officefilereader.permissionhelp.PermissionType;
 import com.wxystatic.officefilereaderlibrary.ExcelModel;
+import com.wxystatic.officefilereaderlibrary.ExcelReadListener;
 import com.wxystatic.officefilereaderlibrary.ExcelReaderHelp;
 
 import java.io.File;
@@ -43,28 +44,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showFile(String path) {
-        File file = new File(path);
-        try {
-            InputStream inputStream = new FileInputStream(file);
-            List<ExcelModel> list = ExcelReaderHelp.getInstance().readExcel(this, inputStream);
-            Log.v("size=", list.size() + "");
-            for (int i=0;i<list.size();i++ ) {
-                if (i==0){
-                    tvAll.setText(tvAll.getText()+list.get(i).getContent());
-                }else{
-                    if (list.get(i).getRow()==list.get(i-1).getRow()){
-                        tvAll.setText(tvAll.getText()+"   "+list.get(i).getContent());
+        ExcelReaderHelp.getInstance().readExcel(path, new ExcelReadListener() {
+            @Override
+            public void onSuccess(List<ExcelModel> list) {
+                String s="";
+                for (int i=0;i<list.size();i++ ) {
+                    ExcelModel excelModel=list.get(i);
+                    
+                    if (i==0){
                     }else{
-                        tvAll.setText(tvAll.getText()+"\n"+list.get(i).getContent());
+                        if (list.get(i).getRow()==list.get(i-1).getRow()){
+                            tvAll.setText(tvAll.getText()+"   "+list.get(i).getContent());
+                        }else{
+                            tvAll.setText(tvAll.getText()+"\n"+list.get(i).getContent());
 
+                        }
                     }
-                }
 
+                }
             }
-        } catch (FileNotFoundException e) {
-            Toast.makeText(this, "文件不存在", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
+            @Override
+            public void onFailed(Exception e) {
+              Log.v("Exception=",e.getMessage());
+            }
+        });
 
     }
 
