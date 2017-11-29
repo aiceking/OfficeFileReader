@@ -16,12 +16,9 @@ import com.wxystatic.officefilereader.permissionhelp.PermissionHelp;
 import com.wxystatic.officefilereader.permissionhelp.PermissionType;
 import com.wxystatic.officefilereaderlibrary.ExcelModel;
 import com.wxystatic.officefilereaderlibrary.ExcelReadListener;
-import com.wxystatic.officefilereaderlibrary.ExcelReaderHelp;
+import com.wxystatic.officefilereaderlibrary.ExcelReadWriteHelp;
+import com.wxystatic.officefilereaderlibrary.ExcelWriteListener;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,10 +41,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showFile(String path) {
-        ExcelReaderHelp.getInstance().readExcel(path, new ExcelReadListener() {
+        ExcelReadWriteHelp.getInstance().WriteExcel(path, "张三10", "sex", "人妖", new ExcelWriteListener() {
             @Override
-            public void onSuccess(List<ExcelModel> list) {
-                String s="";
+            public void onSuccess() {
+                Toast.makeText(MainActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+//        ExcelReadWriteHelp.getInstance().readExcel(path, new ExcelReadListener() {
+//            @Override
+//            public void onSuccess(List<ExcelModel> list) {
+//                String s="";
 //                for (int i=0;i<list.size();i++ ) {
 //                    ExcelModel excelModel=list.get(i);
 //                    if (i==0){
@@ -60,13 +68,13 @@ public class MainActivity extends AppCompatActivity {
 //                        }
 //                    }
 //                }
-                tvAll.setText(s);
-            }
-            @Override
-            public void onFailed(Exception e) {
-              Log.v("Exception=",e.getMessage());
-            }
-        });
+//                tvAll.setText(s);
+//            }
+//            @Override
+//            public void onFailed(Exception e) {
+//              Log.v("Exception=",e.getMessage());
+//            }
+//        });
 
     }
 
