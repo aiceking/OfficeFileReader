@@ -48,20 +48,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<ExcelModel> list) {
                 String s="";
-                for (int i=0;i<list.size();i++ ) {
-                    ExcelModel excelModel=list.get(i);
-                    
-                    if (i==0){
-                    }else{
-                        if (list.get(i).getRow()==list.get(i-1).getRow()){
-                            tvAll.setText(tvAll.getText()+"   "+list.get(i).getContent());
-                        }else{
-                            tvAll.setText(tvAll.getText()+"\n"+list.get(i).getContent());
-
-                        }
-                    }
-
-                }
+//                for (int i=0;i<list.size();i++ ) {
+//                    ExcelModel excelModel=list.get(i);
+//                    if (i==0){
+//                        s=excelModel.getContent();
+//                    }else{
+//                        if (list.get(i).getRow()==list.get(i-1).getRow()){
+//                            s=s+"   "+excelModel.getContent();
+//                        }else{
+//                            s=s+"\n"+excelModel.getContent();
+//                        }
+//                    }
+//                }
+                tvAll.setText(s);
             }
             @Override
             public void onFailed(Exception e) {

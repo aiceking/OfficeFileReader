@@ -52,8 +52,10 @@ public class ExcelReaderThread extends AsyncTask<String,Integer,ExcelResult>{
             for (int row = 0; row < rowCount; row++){
                 Cell[] cells=sheet.getRow(row);
                 if (cells.length>0){
+                    Log.v("row==columnCount==",row+"=="+cells.length+"");
                     for (int column = 0; column < cells.length; column++){
                         cell = cells[column];
+                        Log.v("row==column==Contents",row+"=="+column+"=="+cell.getContents().trim());
                         ExcelModel excelModel=new ExcelModel(row,column,cell.getContents().trim());
                         list.add(excelModel);
                     }
@@ -68,7 +70,6 @@ public class ExcelReaderThread extends AsyncTask<String,Integer,ExcelResult>{
         }
         return excelResult;
     }
-
     @Override
     protected void onPostExecute(ExcelResult excelResult) {
         if (excelResult.getException()==null){
