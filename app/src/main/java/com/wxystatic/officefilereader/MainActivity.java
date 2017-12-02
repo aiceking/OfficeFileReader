@@ -41,40 +41,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showFile(String path) {
-        ExcelReadWriteHelp.getInstance().WriteExcel(path, "张三10", "sex", "人妖", new ExcelWriteListener() {
-            @Override
-            public void onSuccess() {
-                Toast.makeText(MainActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-//        ExcelReadWriteHelp.getInstance().readExcel(path, new ExcelReadListener() {
+//        ExcelReadWriteHelp.getInstance().WriteExcel(path, "张三10", "sex", "人妖", new ExcelWriteListener() {
 //            @Override
-//            public void onSuccess(List<ExcelModel> list) {
-//                String s="";
-//                for (int i=0;i<list.size();i++ ) {
-//                    ExcelModel excelModel=list.get(i);
-//                    if (i==0){
-//                        s=excelModel.getContent();
-//                    }else{
-//                        if (list.get(i).getRow()==list.get(i-1).getRow()){
-//                            s=s+"   "+excelModel.getContent();
-//                        }else{
-//                            s=s+"\n"+excelModel.getContent();
-//                        }
-//                    }
-//                }
-//                tvAll.setText(s);
+//            public void onSuccess() {
+//                Toast.makeText(MainActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
 //            }
+//
 //            @Override
 //            public void onFailed(Exception e) {
-//              Log.v("Exception=",e.getMessage());
+//                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 //            }
 //        });
+        ExcelReadWriteHelp.getInstance().readExcel(path, new ExcelReadListener() {
+            @Override
+            public void onSuccess(List<ExcelModel> list) {
+                String s="";
+                for (int i=0;i<list.size();i++ ) {
+                    ExcelModel excelModel=list.get(i);
+                    if (i==0){
+                        s=excelModel.getContent();
+                    }else{
+                        if (list.get(i).getRow()==list.get(i-1).getRow()){
+                            s=s+"   "+excelModel.getContent();
+                        }else{
+                            s=s+"\n"+excelModel.getContent();
+                        }
+                    }
+                }
+                tvAll.setText(s);
+            }
+            @Override
+            public void onFailed(Exception e) {
+              Log.v("Exception=",e.getMessage());
+            }
+        });
 
     }
 
